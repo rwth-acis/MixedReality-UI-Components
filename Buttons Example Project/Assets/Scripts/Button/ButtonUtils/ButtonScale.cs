@@ -3,88 +3,93 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ButtonScale : MonoBehaviour
+namespace i5.MixedRealityUIComponents.Button
 {
-    [SerializeField] private Transform buttonBackground;
-    [SerializeField] private Transform frame;
-    [SerializeField] private Vector3 buttonSize = new Vector3(0.1f, 0.1f, 0.007f);
-    [SerializeField] private float frameThickness = 1f;
 
-    private SpriteRenderer frameRenderer;
-
-    public Vector3 ButtonSize
+    public class ButtonScale : MonoBehaviour
     {
-        get { return buttonSize; }
-        set
-        {
-            buttonSize = value;
-            UpdateSize();
-        }
-    }
+        [SerializeField] private Transform buttonBackground;
+        [SerializeField] private Transform frame;
+        [SerializeField] private Vector3 buttonSize = new Vector3(0.1f, 0.1f, 0.007f);
+        [SerializeField] private float frameThickness = 1f;
 
-    public float FrameThickness
-    {
-        get { return frameThickness; }
-        set
-        {
-            frameThickness = value;
-            UpdateSize();
-        }
-    }
+        private SpriteRenderer frameRenderer;
 
-    private void Awake()
-    {
-        CheckSetup();
-        frameRenderer = frame.GetComponent<SpriteRenderer>();
-    }
-
-    /// <summary>
-    /// Called in the editor if a variable in the inspector is changed
-    /// </summary>
-    private void OnValidate()
-    {
-        CheckSetup();
-        if (frameRenderer == null)
+        public Vector3 ButtonSize
         {
-            frameRenderer = frame.GetComponent<SpriteRenderer>();
-        }
-        UpdateSize();
-    }
-
-    private void UpdateSize()
-    {
-        buttonBackground.localScale = buttonSize;
-        if (frameThickness == 0)
-        {
-            frameThickness = 1;
-        }
-        frame.localScale = new Vector3(0.01f * frameThickness, 0.01f * frameThickness, 0.01f * frameThickness);
-        frameRenderer.size = new Vector2(buttonSize.x * 100 / frameThickness, buttonSize.y * 100 / frameThickness);
-    }
-
-    private bool CheckSetup()
-    {
-        bool setUpCorrectly = true;
-        if (buttonBackground == null)
-        {
-            SpecialDebugMessages.LogMissingReferenceError(this, nameof(buttonBackground));
-            setUpCorrectly = false;
-        }
-        if (frame == null)
-        {
-            SpecialDebugMessages.LogMissingReferenceError(this, nameof(frame));
-            setUpCorrectly = false;
-        }
-        else
-        {
-            if (frame.GetComponent<SpriteRenderer>() == null)
+            get { return buttonSize; }
+            set
             {
-                SpecialDebugMessages.LogComponentNotFoundError(this, nameof(SpriteRenderer), frame.gameObject);
-                setUpCorrectly = false;
+                buttonSize = value;
+                UpdateSize();
             }
         }
 
-        return setUpCorrectly;
+        public float FrameThickness
+        {
+            get { return frameThickness; }
+            set
+            {
+                frameThickness = value;
+                UpdateSize();
+            }
+        }
 
+        private void Awake()
+        {
+            CheckSetup();
+            frameRenderer = frame.GetComponent<SpriteRenderer>();
+        }
+
+        /// <summary>
+        /// Called in the editor if a variable in the inspector is changed
+        /// </summary>
+        private void OnValidate()
+        {
+            CheckSetup();
+            if (frameRenderer == null)
+            {
+                frameRenderer = frame.GetComponent<SpriteRenderer>();
+            }
+            UpdateSize();
+        }
+
+        private void UpdateSize()
+        {
+            buttonBackground.localScale = buttonSize;
+            if (frameThickness == 0)
+            {
+                frameThickness = 1;
+            }
+            frame.localScale = new Vector3(0.01f * frameThickness, 0.01f * frameThickness, 0.01f * frameThickness);
+            frameRenderer.size = new Vector2(buttonSize.x * 100 / frameThickness, buttonSize.y * 100 / frameThickness);
+        }
+
+        private bool CheckSetup()
+        {
+            bool setUpCorrectly = true;
+            if (buttonBackground == null)
+            {
+                SpecialDebugMessages.LogMissingReferenceError(this, nameof(buttonBackground));
+                setUpCorrectly = false;
+            }
+            if (frame == null)
+            {
+                SpecialDebugMessages.LogMissingReferenceError(this, nameof(frame));
+                setUpCorrectly = false;
+            }
+            else
+            {
+                if (frame.GetComponent<SpriteRenderer>() == null)
+                {
+                    SpecialDebugMessages.LogComponentNotFoundError(this, nameof(SpriteRenderer), frame.gameObject);
+                    setUpCorrectly = false;
+                }
+            }
+
+            return setUpCorrectly;
+
+        }
     }
+
 }

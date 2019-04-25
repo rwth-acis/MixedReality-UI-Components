@@ -53,6 +53,7 @@ GameObject:
   - component: {fileID: 4719364750385304}
   - component: {fileID: 23695514393037150}
   - component: {fileID: 102175025310063642}
+  - component: {fileID: 114104762124879040}
   m_Layer: 0
   m_Name: Caption
   m_TagString: Untagged
@@ -70,6 +71,7 @@ GameObject:
   - component: {fileID: 4119019440836216}
   - component: {fileID: 33900627679452416}
   - component: {fileID: 23267921922709568}
+  - component: {fileID: 114919990255091482}
   m_Layer: 0
   m_Name: LED
   m_TagString: Untagged
@@ -104,7 +106,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4608010863254548}
   - component: {fileID: 114590650899068960}
-  - component: {fileID: 114888015144914998}
+  - component: {fileID: 114551612905072092}
+  - component: {fileID: 114410762369832206}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -122,6 +125,7 @@ GameObject:
   - component: {fileID: 4766771396359332}
   - component: {fileID: 23916787255320614}
   - component: {fileID: 102939543200807436}
+  - component: {fileID: 114115234276629740}
   m_Layer: 0
   m_Name: Content
   m_TagString: Untagged
@@ -195,7 +199,7 @@ Transform:
   m_GameObject: {fileID: 1209708391050730}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.0038499832}
-  m_LocalScale: {x: 0.010000001, y: 0.010000001, z: 0.00070000003}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children: []
   m_Father: {fileID: 4608010863254548}
   m_RootOrder: 1
@@ -430,6 +434,65 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
+--- !u!114 &114104762124879040
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1337291366974370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6b9d26471578b47a9549d219cb7a4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alignmentMode: 1
+  alignTo: {fileID: 4253107813467388}
+  constantOffset: {x: 0, y: -0.036199998, z: -0.00084006786}
+  scaleProportionalToParent: 1
+  scaleEffect: {x: 1, y: 1, z: 1}
+--- !u!114 &114115234276629740
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1967950381851102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6b9d26471578b47a9549d219cb7a4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alignmentMode: 1
+  alignTo: {fileID: 4253107813467388}
+  constantOffset: {x: 0, y: 0, z: 0}
+  scaleProportionalToParent: 1
+  scaleEffect: {x: 1, y: 1, z: 1}
+--- !u!114 &114410762369832206
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1962874572989692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06dca31d879efd84c9277f9f642779d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressDepth: 0.007
+--- !u!114 &114551612905072092
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1962874572989692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8128d7e52e8c21647a9c95dc1dd174a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonBackground: {fileID: 4136639782635692}
+  frame: {fileID: 4634061324372962}
+  buttonSize: {x: 0.1, y: 0.1, z: 0.007}
+  frameThickness: 1
 --- !u!114 &114590650899068960
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -446,18 +509,22 @@ MonoBehaviour:
   caption: Button Caption
   showIcon: 1
   showCaption: 1
---- !u!114 &114888015144914998
+--- !u!114 &114919990255091482
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1962874572989692}
+  m_GameObject: {fileID: 1534664907016572}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06dca31d879efd84c9277f9f642779d3, type: 3}
+  m_Script: {fileID: 11500000, guid: fc6b9d26471578b47a9549d219cb7a4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pressDepth: 0
+  alignmentMode: 1
+  alignTo: {fileID: 4119019440836216}
+  constantOffset: {x: 0, y: 0, z: 0}
+  scaleProportionalToParent: 1
+  scaleEffect: {x: 1, y: 1, z: 1}
 --- !u!212 &212485529112723238
 SpriteRenderer:
   m_ObjectHideFlags: 1
