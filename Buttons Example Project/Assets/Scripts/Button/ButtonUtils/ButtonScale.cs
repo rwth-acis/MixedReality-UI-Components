@@ -54,7 +54,12 @@ public class ButtonScale : MonoBehaviour
     private void UpdateSize()
     {
         buttonBackground.localScale = buttonSize;
-        frameRenderer.size = new Vector2(buttonSize.x * 100, buttonSize.y * 100);
+        if (frameThickness == 0)
+        {
+            frameThickness = 1;
+        }
+        frame.localScale = new Vector3(0.01f * frameThickness, 0.01f * frameThickness, 0.01f * frameThickness);
+        frameRenderer.size = new Vector2(buttonSize.x * 100 / frameThickness, buttonSize.y * 100 / frameThickness);
     }
 
     private bool CheckSetup()
