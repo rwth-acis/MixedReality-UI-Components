@@ -4,54 +4,58 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FocusableLongPressButton : FocusableButton, IHoldHandler
+namespace i5.MixedRealityUIComponents.Button
 {
 
-    /// <summary>
-    /// gets called every frame on a long press
-    /// </summary>
-    public Action OnLongPressed;
-
-    private bool longPressed = false;
-
-    /// <summary>
-    /// Is called if the user cancels holding the button
-    /// </summary>
-    /// <param name="eventData"></param>
-    public void OnHoldCanceled(HoldEventData eventData)
+    public class FocusableLongPressButton : FocusableButton, IHoldHandler
     {
-        longPressed = false;
-    }
 
-    /// <summary>
-    /// Is called if the user releases the button after holding it down
-    /// </summary>
-    /// <param name="eventData"></param>
-    public void OnHoldCompleted(HoldEventData eventData)
-    {
-        longPressed = false;
-    }
+        /// <summary>
+        /// gets called every frame on a long press
+        /// </summary>
+        public Action OnLongPressed;
 
-    /// <summary>
-    /// Is called if the user holds the button
-    /// </summary>
-    /// <param name="eventData"></param>
-    public void OnHoldStarted(HoldEventData eventData)
-    {
-        longPressed = true;
-    }
+        private bool longPressed = false;
 
-    /// <summary>
-    /// If the button is pressed, each frame the specified function OnLongPressed
-    /// will be executed until the user releases the button again
-    /// </summary>
-    public void Update()
-    {
-        if (longPressed)
+        /// <summary>
+        /// Is called if the user cancels holding the button
+        /// </summary>
+        /// <param name="eventData"></param>
+        public void OnHoldCanceled(HoldEventData eventData)
         {
-            if (OnLongPressed != null)
+            longPressed = false;
+        }
+
+        /// <summary>
+        /// Is called if the user releases the button after holding it down
+        /// </summary>
+        /// <param name="eventData"></param>
+        public void OnHoldCompleted(HoldEventData eventData)
+        {
+            longPressed = false;
+        }
+
+        /// <summary>
+        /// Is called if the user holds the button
+        /// </summary>
+        /// <param name="eventData"></param>
+        public void OnHoldStarted(HoldEventData eventData)
+        {
+            longPressed = true;
+        }
+
+        /// <summary>
+        /// If the button is pressed, each frame the specified function OnLongPressed
+        /// will be executed until the user releases the button again
+        /// </summary>
+        public void Update()
+        {
+            if (longPressed)
             {
-                OnLongPressed();
+                if (OnLongPressed != null)
+                {
+                    OnLongPressed();
+                }
             }
         }
     }

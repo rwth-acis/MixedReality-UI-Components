@@ -4,152 +4,156 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-/// <summary>
-/// Registers InputEvents and redirects them to a specified method
-/// </summary>
-public class GaMRButton : MonoBehaviour, IInputClickHandler
+namespace i5.MixedRealityUIComponents.Button
 {
 
     /// <summary>
-    /// The method which should be called if the button is pressed
+    /// Registers InputEvents and redirects them to a specified method
     /// </summary>
-    public Action OnPressed;
-    public Action<GaMRButton> OnButtonPressed;
-    protected string text;
-    private TextMesh textMesh;
-    protected Sprite icon;
-    private SpriteRenderer spriteRenderer;
-    private bool visible;
-
-    public int Data { get; set; } // custom data
-
-    private void Start()
+    public class GaMRButton : MonoBehaviour, IInputClickHandler
     {
-        Transform caption = transform.Find("Caption");
-        if (caption != null)
-        {
-            textMesh = caption.GetComponent<TextMesh>();
-        }
 
-        Transform iconTransform = transform.Find("Icon");
-        if (iconTransform != null)
-        {
-            spriteRenderer = iconTransform.GetComponent<SpriteRenderer>();
-        }
-    }
+        /// <summary>
+        /// The method which should be called if the button is pressed
+        /// </summary>
+        public Action OnPressed;
+        public Action<GaMRButton> OnButtonPressed;
+        protected string text;
+        private TextMesh textMesh;
+        protected Sprite icon;
+        private SpriteRenderer spriteRenderer;
+        private bool visible;
 
-    /// <summary>
-    /// Gets called if the user taps on the button
-    /// Executes OnPressed
-    /// </summary>
-    /// <param name="eventData"></param>
-    public virtual void OnInputClicked(InputClickedEventData eventData)
-    {
-        // redirect to the specified method
-        if (OnPressed != null)
-        {
-            OnPressed();
-        }
+        public int Data { get; set; } // custom data
 
-        if (OnButtonPressed != null)
+        private void Start()
         {
-            OnButtonPressed(this);
-        }
-    }
-
-    public string Text
-    {
-        get { return text; }
-        set
-        {
-            text = value;
-            if (textMesh == null)
+            Transform caption = transform.Find("Caption");
+            if (caption != null)
             {
-                Transform caption = transform.Find("Caption");
-                if (caption != null)
+                textMesh = caption.GetComponent<TextMesh>();
+            }
+
+            Transform iconTransform = transform.Find("Icon");
+            if (iconTransform != null)
+            {
+                spriteRenderer = iconTransform.GetComponent<SpriteRenderer>();
+            }
+        }
+
+        /// <summary>
+        /// Gets called if the user taps on the button
+        /// Executes OnPressed
+        /// </summary>
+        /// <param name="eventData"></param>
+        public virtual void OnInputClicked(InputClickedEventData eventData)
+        {
+            // redirect to the specified method
+            if (OnPressed != null)
+            {
+                OnPressed();
+            }
+
+            if (OnButtonPressed != null)
+            {
+                OnButtonPressed(this);
+            }
+        }
+
+        public string Text
+        {
+            get { return text; }
+            set
+            {
+                text = value;
+                if (textMesh == null)
                 {
-                    textMesh = caption.GetComponent<TextMesh>();
+                    Transform caption = transform.Find("Caption");
+                    if (caption != null)
+                    {
+                        textMesh = caption.GetComponent<TextMesh>();
+                    }
+                }
+
+                if (textMesh != null)
+                {
+                    textMesh.text = text;
                 }
             }
-
-            if (textMesh != null)
-            {
-                textMesh.text = text;
-            }
         }
-    }
 
-    public Sprite Icon
-    {
-        get { return icon; }
-        set
+        public Sprite Icon
         {
-            icon = value;
-            if (spriteRenderer == null)
+            get { return icon; }
+            set
             {
-                Transform iconTransform = transform.Find("Icon");
-                if (iconTransform != null)
+                icon = value;
+                if (spriteRenderer == null)
                 {
-                    spriteRenderer = iconTransform.GetComponent<SpriteRenderer>();
+                    Transform iconTransform = transform.Find("Icon");
+                    if (iconTransform != null)
+                    {
+                        spriteRenderer = iconTransform.GetComponent<SpriteRenderer>();
+                    }
+                }
+
+                if (spriteRenderer != null)
+                {
+                    spriteRenderer.sprite = icon;
                 }
             }
-
-            if (spriteRenderer != null)
-            {
-                spriteRenderer.sprite = icon;
-            }
         }
-    }
 
-    public bool IconVisible
-    {
-        get
+        public bool IconVisible
         {
-            if (spriteRenderer == null)
+            get
             {
-                Transform iconTransform = transform.Find("Icon");
-                if (iconTransform != null)
+                if (spriteRenderer == null)
                 {
-                    spriteRenderer = iconTransform.GetComponent<SpriteRenderer>();
+                    Transform iconTransform = transform.Find("Icon");
+                    if (iconTransform != null)
+                    {
+                        spriteRenderer = iconTransform.GetComponent<SpriteRenderer>();
+                    }
+                }
+
+                if (spriteRenderer != null)
+                {
+                    return spriteRenderer.gameObject.activeSelf;
+                }
+                else
+                {
+                    // if there is no icon => nothing visible
+                    return false;
                 }
             }
-
-            if (spriteRenderer != null)
+            set
             {
-                return spriteRenderer.gameObject.activeSelf;
-            }
-            else
-            {
-                // if there is no icon => nothing visible
-                return false;
-            }
-        }
-        set
-        {
-            if (spriteRenderer == null)
-            {
-                Transform iconTransform = transform.Find("Icon");
-                if (iconTransform != null)
+                if (spriteRenderer == null)
                 {
-                    spriteRenderer = iconTransform.GetComponent<SpriteRenderer>();
+                    Transform iconTransform = transform.Find("Icon");
+                    if (iconTransform != null)
+                    {
+                        spriteRenderer = iconTransform.GetComponent<SpriteRenderer>();
+                    }
+                }
+
+                if (spriteRenderer != null)
+                {
+                    spriteRenderer.gameObject.SetActive(value);
                 }
             }
-
-            if (spriteRenderer != null)
-            {
-                spriteRenderer.gameObject.SetActive(value);
-            }
         }
-    }
 
-    public bool Visible
-    {
-        get { return visible; }
-        set
+        public bool Visible
         {
-            visible = value;
-            gameObject.SetActive(value);
-        }
+            get { return visible; }
+            set
+            {
+                visible = value;
+                gameObject.SetActive(value);
+            }
 
+        }
     }
 }

@@ -3,41 +3,46 @@ using System.Collections.Generic;
 using HoloToolkit.Unity.InputModule;
 using UnityEngine;
 
-public class FocusableCheckButton : FocusableButton
+namespace i5.MixedRealityUIComponents.Button
 {
-    private bool buttonChecked;
-    private Renderer diodeRenderer;
-    private Color onColor = new Color(0, 0.529f, 0, 1f);
 
-    public bool ButtonChecked
+    public class FocusableCheckButton : FocusableButton
     {
-        get { return buttonChecked; }
-        set
+        private bool buttonChecked;
+        private Renderer diodeRenderer;
+        private Color onColor = new Color(0, 0.529f, 0, 1f);
+
+        public bool ButtonChecked
         {
-            buttonChecked = value;
+            get { return buttonChecked; }
+            set
+            {
+                buttonChecked = value;
 
-            if (diodeRenderer == null)
-            {
-                diodeRenderer = transform.Find("LED").GetComponent<Renderer>();
-            }
+                if (diodeRenderer == null)
+                {
+                    diodeRenderer = transform.Find("LED").GetComponent<Renderer>();
+                }
 
-            if (buttonChecked)
-            {
-                diodeRenderer.material.SetColor("_EmissiveColor", onColor);
+                if (buttonChecked)
+                {
+                    diodeRenderer.material.SetColor("_EmissiveColor", onColor);
+                }
+                else
+                {
+                    diodeRenderer.material.SetColor("_EmissiveColor", Color.black);
+                }
             }
-            else
+        }
+
+        public override void OnInputClicked(InputClickedEventData eventData)
+        {
+            if (ButtonEnabled)
             {
-                diodeRenderer.material.SetColor("_EmissionColor", Color.black);
+                ButtonChecked = !ButtonChecked;
             }
+            base.OnInputClicked(eventData);
         }
     }
 
-    public override void OnInputClicked(InputClickedEventData eventData)
-    {
-        if (ButtonEnabled)
-        {
-            ButtonChecked = !ButtonChecked;
-        }
-        base.OnInputClicked(eventData);
-    }
 }

@@ -2,26 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FocusableContentButton : FocusableButton {
+namespace i5.MixedRealityUIComponents.Button
+{
 
-    private string content;
-    private TextMesh contentTextMesh;
-
-    public string Content
+    public class FocusableContentButton : FocusableButton
     {
-        get { return content; }
-        set
+
+        private string content;
+        private TextMesh contentTextMesh;
+
+        public string Content
         {
-            content = value;
-            if (contentTextMesh == null)
+            get { return content; }
+            set
             {
-                contentTextMesh = transform.Find("Content").GetComponent<TextMesh>();
-            }
+                content = value;
+                if (contentTextMesh == null)
+                {
+                    contentTextMesh = transform.Find("Content").GetComponent<TextMesh>();
+                }
 
 
-            if (contentTextMesh != null)
-            {
-                contentTextMesh.text = content;
+                if (contentTextMesh != null)
+                {
+                    contentTextMesh.text = content;
+                }
             }
         }
     }
