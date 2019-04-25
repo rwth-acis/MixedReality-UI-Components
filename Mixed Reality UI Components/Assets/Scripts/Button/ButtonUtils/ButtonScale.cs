@@ -70,19 +70,19 @@ namespace i5.MixedRealityUIComponents.Button
             bool setUpCorrectly = true;
             if (buttonBackground == null)
             {
-                SpecialDebugMessages.LogMissingReferenceError(this, nameof(buttonBackground));
+                DebugMessages.LogMissingReferenceError(this, nameof(buttonBackground));
                 setUpCorrectly = false;
             }
             if (frame == null)
             {
-                SpecialDebugMessages.LogMissingReferenceError(this, nameof(frame));
+                DebugMessages.LogMissingReferenceError(this, nameof(frame));
                 setUpCorrectly = false;
             }
             else
             {
                 if (frame.GetComponent<SpriteRenderer>() == null)
                 {
-                    SpecialDebugMessages.LogComponentNotFoundError(this, nameof(SpriteRenderer), frame.gameObject);
+                    DebugMessages.LogComponentNotFoundError(this, nameof(SpriteRenderer), frame.gameObject);
                     setUpCorrectly = false;
                 }
             }

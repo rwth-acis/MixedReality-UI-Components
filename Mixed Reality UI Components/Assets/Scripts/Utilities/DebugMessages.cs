@@ -5,7 +5,7 @@ using UnityEngine;
 namespace i5.Utilities.Debugging
 {
 
-    public static class SpecialDebugMessages
+    public static class DebugMessages
     {
         public static void LogMissingReferenceError(MonoBehaviour thisComponent, string referenceName)
         {
