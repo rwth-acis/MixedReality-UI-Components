@@ -11,10 +11,12 @@ namespace i5.MixedRealityUIComponents.BoundingBox
         [SerializeField] private Transform[] xAxisWires;
         [SerializeField] private Transform[] yAxisWires;
         [SerializeField] private Transform[] zAxisWires;
+        [SerializeField] private Transform[] moveWidgets;
         [SerializeField] private Transform content;
 
 
         [SerializeField] private float wireThickness = 0.01f;
+        [SerializeField] private float moveWidgetTargetSize = 0.3f;
         [SerializeField] private Vector3 boundingBoxSize = Vector3.one;
 
         public float WireThickness
@@ -72,6 +74,11 @@ namespace i5.MixedRealityUIComponents.BoundingBox
             {
                 UpdateWire(zWire, boundingBoxSize.z);
             }
+
+            foreach (Transform widget in moveWidgets)
+            {
+                UpdateWidget(widget, moveWidgetTargetSize);
+            }
         }
 
         private void UpdateWire(Transform wire, float length)
@@ -83,6 +90,24 @@ namespace i5.MixedRealityUIComponents.BoundingBox
                     );
             Vector3 uniformPos = ToUniSpaceVector(wire.localPosition);
             wire.localPosition = 0.5f * Vector3.Scale(uniformPos, boundingBoxSize);
+        }
+
+        private void UpdateWidget(Transform widget, float targetSize)
+        {
+            Vector3 uniformPos = ToUniSpaceVector(widget.localPosition);
+            widget.localPosition = 0.5f * Vector3.Scale(uniformPos, boundingBoxSize);
+
+            // in the uniformPos, the position with 1 or -1 is the only irrelevant size
+            float minValue = targetSize;
+
+            for (int i=0;i<3;i++)
+            {
+                if (uniformPos[i] == 0 && boundingBoxSize[i] < minValue)
+                {
+                    minValue = boundingBoxSize[i];
+                }
+            }
+            widget.localScale = new Vector3(minValue, minValue, minValue);
         }
 
         private void OnValidate()
@@ -108,7 +133,7 @@ namespace i5.MixedRealityUIComponents.BoundingBox
             MeshRenderer[] rends = content.GetComponentsInChildren<MeshRenderer>();
             Bounds overallBounds = new Bounds();
             bool boundsUninitialized = true;
-            foreach(MeshRenderer rend in rends)
+            foreach (MeshRenderer rend in rends)
             {
                 if (boundsUninitialized)
                 {
@@ -141,6 +166,11 @@ namespace i5.MixedRealityUIComponents.BoundingBox
             if (zAxisWires.Length < 4)
             {
                 DebugMessages.LogMissingReferenceError(this, nameof(zAxisWires));
+                setupCorrect = false;
+            }
+            if (moveWidgets.Length < 6)
+            {
+                DebugMessages.LogMissingReferenceError(this, nameof(moveWidgets));
                 setupCorrect = false;
             }
 
