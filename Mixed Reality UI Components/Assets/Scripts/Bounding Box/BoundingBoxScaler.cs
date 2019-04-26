@@ -11,8 +11,10 @@ namespace i5.MixedRealityUIComponents.BoundingBox
         [SerializeField] private Transform[] xAxisWires;
         [SerializeField] private Transform[] yAxisWires;
         [SerializeField] private Transform[] zAxisWires;
-        [SerializeField] private float wireThickness = 0.01f;
+        [SerializeField] private Transform content;
 
+
+        [SerializeField] private float wireThickness = 0.01f;
         [SerializeField] private Vector3 boundingBoxSize = Vector3.one;
 
         public float WireThickness
@@ -53,7 +55,7 @@ namespace i5.MixedRealityUIComponents.BoundingBox
             {
                 boundingBoxSize.y = 0.001f;
             }
-            if (boundingBoxSize.y == 0)
+            if (boundingBoxSize.z == 0)
             {
                 boundingBoxSize.z = 0.001f;
             }
@@ -100,6 +102,29 @@ namespace i5.MixedRealityUIComponents.BoundingBox
                 );
         }
 
+        public void EncapsulateContent()
+        {
+            content.localPosition = Vector3.zero;
+            MeshRenderer[] rends = content.GetComponentsInChildren<MeshRenderer>();
+            Bounds overallBounds = new Bounds();
+            bool boundsUninitialized = true;
+            foreach(MeshRenderer rend in rends)
+            {
+                if (boundsUninitialized)
+                {
+                    overallBounds = rend.bounds;
+                    boundsUninitialized = false;
+                }
+                else
+                {
+                    overallBounds.Encapsulate(rend.bounds);
+                }
+            }
+            BoundingBoxSize = overallBounds.size;
+            content.localPosition = -overallBounds.center;
+        }
+
+
         private bool CheckSetup()
         {
             bool setupCorrect = true;
@@ -116,6 +141,12 @@ namespace i5.MixedRealityUIComponents.BoundingBox
             if (zAxisWires.Length < 4)
             {
                 DebugMessages.LogMissingReferenceError(this, nameof(zAxisWires));
+                setupCorrect = false;
+            }
+
+            if (content == null)
+            {
+                DebugMessages.LogMissingReferenceError(this, nameof(content));
                 setupCorrect = false;
             }
 
