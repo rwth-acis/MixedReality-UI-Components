@@ -6,18 +6,23 @@ using i5.Utilities.Debugging;
 namespace i5.MixedRealityUIComponents.BoundingBox
 {
 
+    [RequireComponent(typeof(BoxCollider))]
     public class BoundingBoxScaler : MonoBehaviour
     {
         [SerializeField] private Transform[] xAxisWires;
         [SerializeField] private Transform[] yAxisWires;
         [SerializeField] private Transform[] zAxisWires;
         [SerializeField] private Transform[] moveWidgets;
+        [SerializeField] private Transform[] scaleWidgets;
         [SerializeField] private Transform content;
 
 
         [SerializeField] private float wireThickness = 0.01f;
         [SerializeField] private float moveWidgetTargetSize = 0.3f;
+        [SerializeField] private float scaleWidgetTargetSize = 0.1f;
         [SerializeField] private Vector3 boundingBoxSize = Vector3.one;
+
+        private BoxCollider boxCollider;
 
         public float WireThickness
         {
@@ -45,6 +50,7 @@ namespace i5.MixedRealityUIComponents.BoundingBox
         private void Awake()
         {
             CheckSetup();
+            boxCollider = GetComponent<BoxCollider>();
         }
 
         private void UpdateBoundingBox()
@@ -75,10 +81,16 @@ namespace i5.MixedRealityUIComponents.BoundingBox
                 UpdateWire(zWire, boundingBoxSize.z);
             }
 
-            foreach (Transform widget in moveWidgets)
+            foreach (Transform moveWidget in moveWidgets)
             {
-                UpdateWidget(widget, moveWidgetTargetSize);
+                UpdateWidget(moveWidget, moveWidgetTargetSize);
             }
+            foreach(Transform scaleWidget in scaleWidgets)
+            {
+                UpdateWidget(scaleWidget, scaleWidgetTargetSize);
+            }
+
+            boxCollider.size = boundingBoxSize;
         }
 
         private void UpdateWire(Transform wire, float length)
@@ -114,6 +126,10 @@ namespace i5.MixedRealityUIComponents.BoundingBox
         {
             if (CheckSetup())
             {
+                if (boxCollider == null)
+                {
+                    boxCollider = GetComponent<BoxCollider>();
+                }
                 UpdateBoundingBox();
             }
         }
@@ -171,6 +187,11 @@ namespace i5.MixedRealityUIComponents.BoundingBox
             if (moveWidgets.Length < 6)
             {
                 DebugMessages.LogMissingReferenceError(this, nameof(moveWidgets));
+                setupCorrect = false;
+            }
+            if (scaleWidgets.Length < 8)
+            {
+                DebugMessages.LogMissingReferenceError(this, nameof(scaleWidgets));
                 setupCorrect = false;
             }
 
